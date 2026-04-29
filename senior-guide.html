@@ -567,6 +567,14 @@
   </div>
 </section>
 
+<!-- NAME REMINDER BANNER -->
+<div style="background: linear-gradient(90deg, #4CC97A, #3ECFCF); padding: 14px 40px; display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+  <span style="color:#fff; font-weight:700; font-size:14px;">✍️ 시작 전에 이름을 먼저 입력해주세요!</span>
+  <input type="text" id="name-top" placeholder="이름 입력" oninput="syncName(this.value)"
+    style="padding:8px 16px; border-radius:20px; border:none; font-size:14px; font-family:'Noto Sans KR',sans-serif; outline:none; width:180px;">
+  <span style="color:rgba(255,255,255,0.85); font-size:13px;">입력하면 제출 시 자동으로 반영돼요 😊</span>
+</div>
+
 <!-- PROGRESS -->
 <div class="progress-section">
   <div class="progress-label">📖 나의 학습 진행률</div>
@@ -883,6 +891,42 @@
     </div>
   </div>
 
+
+  <!-- SUBMIT SECTION -->
+  <div id="submit-section" class="section-card" style="border: 2px solid var(--green);">
+    <div class="section-header">
+      <div class="section-icon icon-green">📤</div>
+      <div class="section-title-wrap">
+        <div class="section-part">최종 제출</div>
+        <h2 class="section-title">워크북 답변 제출하기</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <p class="intro-text" style="margin-bottom: 20px;">
+        모든 파트를 완료하셨나요? 🎉<br>
+        아래에 <strong>이름을 입력</strong>하고 제출하면 담당 인사팀에게 자동으로 전달됩니다!
+      </p>
+      <div class="workbook-section" style="border-color: #A8E6BF; background: linear-gradient(135deg, #F0FCF5, #E8FFF4);">
+        <div class="workbook-title">✍️ 이름 입력</div>
+        <div class="workbook-q">
+          <label><span class="q-num" style="background: var(--green);">필수</span> 이름을 입력해주세요</label>
+          <input type="text" id="user-name" class="workbook-input" style="min-height:auto; height:48px; resize:none;" placeholder="예) 홍길동">
+        </div>
+        <button class="save-btn" id="submit-btn" onclick="submitToNotion()" style="background: var(--green); font-size:16px; padding: 14px 36px; width:100%; justify-content:center; margin-top:12px;">
+          🚀 인사팀에 제출하기
+        </button>
+        <p class="save-notice" style="text-align:center; margin-top:8px;">제출하면 담당자에게 자동으로 전달돼요 💌</p>
+      </div>
+
+      <!-- 제출 완료 메시지 -->
+      <div id="submit-success" style="display:none; background: linear-gradient(135deg, #D6F5E3, #A8E6BF); border-radius:16px; padding:28px; text-align:center; margin-top:16px;">
+        <div style="font-size:48px; margin-bottom:12px;">🎉</div>
+        <div style="font-size:20px; font-weight:900; color:#1A6640; margin-bottom:8px;">제출 완료!</div>
+        <div style="font-size:15px; color:#2D6E4E;">수고하셨어요! 담당 인사팀이 내용을 확인할게요 😊</div>
+      </div>
+    </div>
+  </div>
+
 </main>
 
 <!-- FOOTER -->
@@ -898,6 +942,14 @@
 <div class="toast" id="toast">✅ 저장 완료!</div>
 
 <script>
+  // ─── GOOGLE SHEETS CONFIG ───
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbwqdIu4xABn22KC-cOO318im4b2uRYQ87N1t3NTBlnn3gTTv8pESiXeUGf3ySozJHgPRQ/exec';
+
+  // ─── NAME SYNC ───
+  function syncName(val) {
+    document.getElementById('user-name').value = val;
+  }
+
   // ─── SCENARIO TOGGLE ───
   function switchScenario(type) {
     document.getElementById('scenario-bad').classList.remove('show');
@@ -922,14 +974,62 @@
     saveToStorage();
   }
 
-  // ─── WORKBOOK SAVE ───
+  // ─── WORKBOOK SAVE (local) ───
   function saveWorkbook(part) {
-    const inputs = document.querySelectorAll('[id^="wb' + part.replace('part','') + '-"]');
+    const num = part.replace('part','');
+    const inputs = document.querySelectorAll('[id^="wb' + num + '-"]');
     inputs.forEach(input => {
       localStorage.setItem('guide_' + input.id, input.value);
     });
-    showToast();
+    showToast('💾 임시저장 완료!');
     updateProgress();
+  }
+
+  // ─── GOOGLE SHEETS SUBMIT ───
+  async function submitToNotion() {
+    const name = document.getElementById('user-name').value.trim();
+    if (!name) {
+      alert('이름을 먼저 입력해주세요! ✍️');
+      document.getElementById('user-name').focus();
+      return;
+    }
+
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = '⏳ 제출 중...';
+    btn.disabled = true;
+
+    const getValue = (id) => (document.getElementById(id)?.value || '').trim();
+
+    const payload = {
+      name,
+      p1q1: getValue('wb1-q1') || '(미작성)',
+      p1q2: getValue('wb1-q2') || '(미작성)',
+      p2q1: getValue('wb2-q1') || '(미작성)',
+      p2q2: getValue('wb2-q2') || '(미작성)',
+      p3q1: getValue('wb3-q1') || '(미작성)',
+      p3q2: getValue('wb3-q2') || '(미작성)',
+      p3q3: getValue('wb3-q3') || '(미작성)'
+    };
+
+    try {
+      await fetch(SHEET_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      // no-cors라 응답 확인 불가 → 성공으로 간주
+      document.getElementById('submit-success').style.display = 'block';
+      document.getElementById('submit-btn').style.display = 'none';
+      document.querySelectorAll('.progress-step').forEach(el => el.classList.add('done'));
+      updateProgress();
+
+    } catch(e) {
+      alert('네트워크 오류가 발생했어요 😢\n인터넷 연결을 확인해주세요.');
+      btn.textContent = '🚀 인사팀에 제출하기';
+      btn.disabled = false;
+    }
   }
 
   // ─── PROGRESS ───
@@ -937,8 +1037,7 @@
   function markStep(step) {
     const el = document.getElementById('step-' + step);
     el.classList.toggle('done');
-    const doneCount = document.querySelectorAll('.progress-step.done').length;
-    document.getElementById('progressBar').style.width = (doneCount / steps.length * 100) + '%';
+    updateProgress();
     saveToStorage();
   }
   function updateProgress() {
@@ -947,8 +1046,9 @@
   }
 
   // ─── TOAST ───
-  function showToast() {
+  function showToast(msg) {
     const t = document.getElementById('toast');
+    t.textContent = msg || '✅ 저장 완료!';
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
   }
@@ -961,19 +1061,21 @@
     localStorage.setItem('guide_checks', JSON.stringify(checks));
   }
   function loadFromStorage() {
-    // workbook inputs
     document.querySelectorAll('.workbook-input').forEach(input => {
       const val = localStorage.getItem('guide_' + input.id);
       if (val) input.value = val;
     });
-    // steps
+    const name = localStorage.getItem('guide_username') || '';
+    if (name) {
+      document.getElementById('name-top').value = name;
+      document.getElementById('user-name').value = name;
+    }
     const doneSteps = JSON.parse(localStorage.getItem('guide_doneSteps') || '[]');
     doneSteps.forEach(id => {
       const el = document.getElementById(id);
       if (el) el.classList.add('done');
     });
     updateProgress();
-    // checks
     const checks = JSON.parse(localStorage.getItem('guide_checks') || '[]');
     checks.forEach(labelId => {
       if (!labelId) return;
@@ -987,6 +1089,15 @@
       }
     });
   }
+
+  // ─── NAME AUTO SAVE ───
+  document.addEventListener('DOMContentLoaded', () => {
+    ['name-top', 'user-name'].forEach(id => {
+      document.getElementById(id)?.addEventListener('input', e => {
+        localStorage.setItem('guide_username', e.target.value);
+      });
+    });
+  });
 
   // ─── SMOOTH SCROLL ───
   document.querySelectorAll('a[href^="#"]').forEach(a => {
