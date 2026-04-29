@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>선임 생존 가이드 🛡️ | iFAMILY</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Gaegu:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #4CC97A;
+    --yellow: #FFD84D;
+    --orange: #FF8C42;
+    --blue: #4BA3E3;
+    --teal: #3ECFCF;
+    --pink: #FF6B9D;
+    --bg: #FAFAF7;
+    --card: #FFFFFF;
+    --text: #2D2D2D;
+    --text-light: #6B7280;
+    --radius: 20px;
+    --shadow: 0 4px 24px rgba(0,0,0,0.08);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Noto Sans KR', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.7;
+  }
+
+  /* ───── HEADER ───── */
+  .site-header {
+    background: #fff;
+    padding: 16px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 2px solid #F0F0EA;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  }
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+  .logo-area img { height: 36px; }
+  .logo-badge {
+    background: var(--yellow);
+    color: #2D2D2D;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    letter-spacing: 0.5px;
+  }
+  .header-nav { display: flex; gap: 8px; }
+  .nav-chip {
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    color: var(--text);
+    background: #F3F3EE;
+    transition: all 0.2s;
+    border: none;
+  }
+  .nav-chip:hover { background: var(--yellow); }
+
+  /* ───── HERO ───── */
+  .hero {
+    background: linear-gradient(135deg, #FFF8E1 0%, #E8F8F0 40%, #E3F2FF 100%);
+    padding: 80px 40px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(255,216,77,0.25) 0%, transparent 70%);
+    top: -100px; right: -100px;
+    border-radius: 50%;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(75,163,227,0.2) 0%, transparent 70%);
+    bottom: -80px; left: -80px;
+    border-radius: 50%;
+  }
+  .hero-emoji { font-size: 64px; display: block; margin-bottom: 16px; animation: float 3s ease-in-out infinite; }
+  @keyframes float {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .hero h1 {
+    font-size: clamp(28px, 5vw, 48px);
+    font-weight: 900;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    position: relative;
+  }
+  .hero h1 .highlight {
+    background: linear-gradient(120deg, var(--orange), var(--yellow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  .hero-sub {
+    font-size: 17px;
+    color: var(--text-light);
+    max-width: 500px;
+    margin: 0 auto 32px;
+    position: relative;
+  }
+  .hero-tags { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; position: relative; }
+  .hero-tag {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+  }
+  .tag-green { background: #D6F5E3; color: #1A7A45; }
+  .tag-orange { background: #FFE8D6; color: #B55A1A; }
+  .tag-blue { background: #DAF0FF; color: #1A5EA0; }
+  .tag-pink { background: #FFE0EE; color: #A0245E; }
+
+  /* ───── PROGRESS BAR ───── */
+  .progress-section {
+    background: #fff;
+    padding: 24px 40px;
+    border-bottom: 2px dashed #F0F0EA;
+  }
+  .progress-label {
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+  .progress-bar-outer {
+    background: #F0F0EA;
+    border-radius: 20px;
+    height: 14px;
+    overflow: hidden;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    border-radius: 20px;
+    background: linear-gradient(90deg, var(--green), var(--teal));
+    transition: width 1s ease;
+    width: 0%;
+  }
+  .progress-steps {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+    flex-wrap: wrap;
+  }
+  .progress-step {
+    font-size: 12px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    background: #F0F0EA;
+    color: var(--text-light);
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .progress-step.done { background: var(--green); color: #fff; }
+
+  /* ───── MAIN LAYOUT ───── */
+  .main-wrap {
+    max-width: 860px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+  }
+
+  /* ───── SECTION CARDS ───── */
+  .section-card {
+    background: var(--card);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin-bottom: 40px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+  }
+  .section-card:hover { border-color: var(--yellow); }
+
+  .section-header {
+    padding: 28px 32px 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .section-icon {
+    width: 52px; height: 52px;
+    border-radius: 16px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px;
+    flex-shrink: 0;
+  }
+  .icon-yellow { background: #FFF3C4; }
+  .icon-green { background: #D6F5E3; }
+  .icon-blue { background: #DAF0FF; }
+  .icon-orange { background: #FFE8D6; }
+
+  .section-title-wrap { flex: 1; }
+  .section-part {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--text-light);
+    margin-bottom: 4px;
+  }
+  .section-title {
+    font-size: 22px;
+    font-weight: 900;
+    line-height: 1.3;
+  }
+  .section-body { padding: 0 32px 32px; }
+
+  /* ───── INTRO QUOTE ───── */
+  .intro-quote {
+    background: linear-gradient(135deg, #FFF8E1, #FFFDF5);
+    border-left: 4px solid var(--yellow);
+    border-radius: 0 12px 12px 0;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 15px;
+    font-style: italic;
+    color: #555;
+  }
+  .intro-text { font-size: 15px; color: #444; line-height: 1.9; }
+
+  /* ───── TOOLKIT ───── */
+  .toolkit-title {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--text-light);
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .step-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+  .step-item {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: #FAFAF7;
+    border-radius: 14px;
+    padding: 16px 18px;
+    border: 1.5px solid #EEEEE8;
+  }
+  .step-num {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    font-size: 13px;
+    font-weight: 900;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .num-yellow { background: var(--yellow); color: #2D2D2D; }
+  .num-green { background: var(--green); color: #fff; }
+  .num-blue { background: var(--blue); color: #fff; }
+  .step-content { flex: 1; }
+  .step-label { font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; }
+  .step-text { font-size: 14px; color: #333; line-height: 1.7; }
+  .step-quote {
+    background: #fff;
+    border: 1.5px dashed #E0E0D8;
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #444;
+    line-height: 1.7;
+  }
+
+  /* ───── SURVIVAL POINT ───── */
+  .survival-point {
+    background: linear-gradient(135deg, #E8F8F0, #D6F5E3);
+    border-radius: 14px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    margin-top: 20px;
+  }
+  .survival-icon { font-size: 20px; flex-shrink: 0; }
+  .survival-text { font-size: 14px; font-weight: 600; color: #1A6640; line-height: 1.7; }
+
+  /* ───── FEEDBACK SCENARIOS ───── */
+  .scenario-tabs { display: flex; gap: 8px; margin-bottom: 16px; }
+  .scenario-tab {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 700;
+    cursor: pointer;
+    border: 2px solid #E0E0D8;
+    background: #fff;
+    transition: all 0.2s;
+    color: var(--text-light);
+  }
+  .scenario-tab.active-bad { background: #FFE8E8; border-color: #FFB3B3; color: #C0392B; }
+  .scenario-tab.active-good { background: #D6F5E3; border-color: #4CC97A; color: #1A6640; }
+
+  .scenario-box { border-radius: 14px; padding: 20px; display: none; }
+  .scenario-box.show { display: block; }
+  .scenario-bad { background: #FFF5F5; border: 2px solid #FFD0D0; }
+  .scenario-good { background: #F0FCF5; border: 2px solid #A8E6BF; }
+
+  .scenario-label {
+    font-size: 11px;
+    font-weight: 900;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .label-bad { color: #C0392B; }
+  .label-good { color: #1A7A45; }
+
+  .dialogue { margin-bottom: 10px; }
+  .dialogue-line { font-size: 14px; line-height: 1.8; color: #333; }
+  .dialogue-speaker { font-weight: 700; }
+  .thought { color: #999; font-style: italic; font-size: 13px; }
+
+  .warm-firm-item {
+    background: #fff;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 8px;
+    border-left: 4px solid var(--green);
+  }
+  .warm-firm-item.warm { border-color: var(--orange); }
+  .warm-firm-item.firm { border-color: var(--blue); }
+  .wf-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .badge-warm { color: var(--orange); }
+  .badge-firm { color: var(--blue); }
+  .wf-text { font-size: 14px; color: #333; line-height: 1.7; }
+
+  /* ───── WORKBOOK INPUTS ───── */
+  .workbook-section {
+    background: linear-gradient(135deg, #FAFFF5, #F0F9FF);
+    border: 2px dashed #B8E4C9;
+    border-radius: 16px;
+    padding: 24px;
+    margin-top: 16px;
+  }
+  .workbook-title {
+    font-size: 15px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .workbook-q {
+    margin-bottom: 16px;
+  }
+  .workbook-q label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #444;
+    margin-bottom: 6px;
+  }
+  .workbook-q label .q-num {
+    display: inline-block;
+    width: 20px; height: 20px;
+    background: var(--blue);
+    color: #fff;
+    border-radius: 50%;
+    font-size: 11px;
+    font-weight: 900;
+    text-align: center;
+    line-height: 20px;
+    margin-right: 6px;
+  }
+  .workbook-input {
+    width: 100%;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1.5px solid #D0E8D8;
+    background: #fff;
+    font-family: 'Noto Sans KR', sans-serif;
+    font-size: 14px;
+    color: var(--text);
+    resize: vertical;
+    min-height: 72px;
+    transition: border-color 0.2s;
+    outline: none;
+  }
+  .workbook-input:focus { border-color: var(--green); box-shadow: 0 0 0 3px rgba(76,201,122,0.15); }
+  .workbook-input::placeholder { color: #BDC3C7; }
+
+  .save-btn {
+    background: var(--green);
+    color: #fff;
+    border: none;
+    padding: 12px 28px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .save-btn:hover { background: #3AB568; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(76,201,122,0.3); }
+  .save-notice { font-size: 12px; color: var(--text-light); margin-top: 6px; }
+
+  /* ───── COMIC STRIP ───── */
+  .comic-strip {
+    background: linear-gradient(135deg, #FFF8E1, #FFFDF5);
+    border-radius: 16px;
+    padding: 24px;
+    border: 2px solid #FFE082;
+  }
+  .comic-title { font-size: 15px; font-weight: 900; margin-bottom: 16px; }
+  .comic-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .comic-panel {
+    background: #fff;
+    border-radius: 12px;
+    padding: 16px;
+    border: 2px solid #F0E8C0;
+    position: relative;
+    min-height: 130px;
+  }
+  .panel-num {
+    position: absolute;
+    top: -10px; left: 12px;
+    background: var(--yellow);
+    font-size: 11px;
+    font-weight: 900;
+    padding: 2px 8px;
+    border-radius: 10px;
+    color: #2D2D2D;
+  }
+  .panel-text { font-size: 13px; line-height: 1.8; color: #333; padding-top: 4px; }
+  .panel-speaker { font-weight: 700; }
+  .panel-thought { color: #999; font-style: italic; font-size: 12px; }
+  .panel-highlight { color: var(--green); font-weight: 700; }
+  .panel-emoji { font-size: 28px; display: block; text-align: center; margin-bottom: 8px; }
+
+  /* ───── CHECKLIST ───── */
+  .checklist { list-style: none; }
+  .checklist-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1.5px dashed #EEEEE8;
+  }
+  .checklist-item:last-child { border-bottom: none; }
+  .check-box {
+    width: 22px; height: 22px;
+    border: 2.5px solid #D0D0C8;
+    border-radius: 6px;
+    cursor: pointer;
+    flex-shrink: 0;
+    margin-top: 2px;
+    transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+    background: #fff;
+  }
+  .check-box.checked { background: var(--green); border-color: var(--green); }
+  .check-box.checked::after { content: '✓'; color: #fff; font-size: 13px; font-weight: 900; }
+  .check-label { font-size: 14px; line-height: 1.7; color: #333; cursor: pointer; flex: 1; }
+  .check-label.checked-text { text-decoration: line-through; color: #AAA; }
+
+  /* ───── DIVIDER ───── */
+  .section-divider {
+    text-align: center;
+    margin: 32px 0;
+    color: #CCC;
+    font-size: 20px;
+    letter-spacing: 6px;
+  }
+
+  /* ───── FOOTER ───── */
+  footer {
+    background: #2D2D2D;
+    color: #aaa;
+    text-align: center;
+    padding: 32px 24px;
+    font-size: 13px;
+    line-height: 1.8;
+  }
+  footer .footer-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+  footer img { height: 28px; filter: brightness(0) invert(1) opacity(0.6); }
+
+  /* ───── TOAST ───── */
+  .toast {
+    position: fixed;
+    bottom: 32px; right: 32px;
+    background: var(--green);
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(76,201,122,0.4);
+    opacity: 0;
+    transform: translateY(12px);
+    transition: all 0.3s;
+    z-index: 999;
+    pointer-events: none;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+
+  /* ───── RESPONSIVE ───── */
+  @media (max-width: 600px) {
+    .site-header { padding: 12px 16px; }
+    .header-nav { display: none; }
+    .hero { padding: 48px 20px 40px; }
+    .main-wrap { padding: 24px 16px 60px; }
+    .section-header, .section-body { padding-left: 20px; padding-right: 20px; }
+    .comic-panels { grid-template-columns: 1fr; }
+    .progress-section { padding: 16px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-area">
+    <img src="ifamily_logo.png" alt="iFAMILY">
+    <span class="logo-badge">L&D 워크북</span>
+  </div>
+  <nav class="header-nav">
+    <a class="nav-chip" href="#part1">멘탈 관리</a>
+    <a class="nav-chip" href="#part2">피드백</a>
+    <a class="nav-chip" href="#part3">시스템</a>
+    <a class="nav-chip" href="#comic">오늘의 선임</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <span class="hero-emoji">🛡️</span>
+  <h1>선임 <span class="highlight">생존</span> 가이드</h1>
+  <p class="hero-sub">끼인 세대의 현실적인 생존 도구 모음<br>내일부터 당장 써먹으세요!</p>
+  <div class="hero-tags">
+    <span class="hero-tag tag-green">✅ 멘탈 관리</span>
+    <span class="hero-tag tag-orange">💬 피드백 스킬</span>
+    <span class="hero-tag tag-blue">🛠️ 시스템 워킹</span>
+    <span class="hero-tag tag-pink">😂 B급 힐링</span>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-section">
+  <div class="progress-label">📖 나의 학습 진행률</div>
+  <div class="progress-bar-outer">
+    <div class="progress-bar-inner" id="progressBar"></div>
+  </div>
+  <div class="progress-steps">
+    <span class="progress-step" id="step-intro" onclick="markStep('intro')">📂 서문</span>
+    <span class="progress-step" id="step-part1" onclick="markStep('part1')">🧭 파트1 멘탈</span>
+    <span class="progress-step" id="step-part2" onclick="markStep('part2')">💬 파트2 피드백</span>
+    <span class="progress-step" id="step-part3" onclick="markStep('part3')">🛠️ 파트3 시스템</span>
+    <span class="progress-step" id="step-comic" onclick="markStep('comic')">🎁 밈툰</span>
+  </div>
+</div>
+
+<!-- MAIN -->
+<main class="main-wrap">
+
+  <!-- INTRO -->
+  <div id="intro" class="section-card">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">📂</div>
+      <div class="section-title-wrap">
+        <div class="section-part">서문</div>
+        <h2 class="section-title">우리도 선임은 처음이라</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="intro-quote">
+        "상급자는 '알아서 하라'고 던지고, 후배는 '어떻게 하냐'고 매달리고...<br>도대체 제 실무는 언제 하나요?"
+      </div>
+      <p class="intro-text">
+        안녕하세요, 조직의 허브 선임 여러분! 🙌<br><br>
+        이 가이드는 여러분을 완벽한 리더로 만드는 교과서가 <strong>아닙니다</strong>.<br>
+        폭발적인 성장의 소용돌이 속에서, 여러분의 <strong>멘탈을 지키고</strong>, 최소한의 노력으로 최대 효율을 내며, 상하좌우 관계 속에서 <strong>건강하게 생존하는 실질적인 도구들</strong>만 모았습니다.<br><br>
+        내일부터 당장 써먹으세요. 그리고 <strong>살아남으세요!</strong> 💪
+      </p>
+    </div>
+  </div>
+
+  <!-- PART 1 -->
+  <div id="part1" class="section-card">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">🧭</div>
+      <div class="section-title-wrap">
+        <div class="section-part">파트 1 · 멘탈 관리</div>
+        <h2 class="section-title">상급자의 '위임'에<br>대처하는 자세</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <p class="intro-text" style="margin-bottom:20px;">
+        파트장님들은 지금 <strong>"권한 위임"</strong>과 <strong>"시스템 구축"</strong>이라는 미션을 수행 중입니다. 그 말은 즉슨, 여러분에게 예전보다 더 많은 결정과 책임이 <strong>'토스'</strong>될 거라는 뜻이죠.<br><br>
+        "이걸 다 내가?"라고 생각하면 번아웃됩니다. 우리는 <strong>현명한 팔로워</strong>가 되어야 합니다.
+      </p>
+
+      <div class="toolkit-title">🔧 툴킷 — 상급자 의도 파악 3단계 (Mirroring)</div>
+      <div class="step-list">
+        <div class="step-item">
+          <div class="step-num num-yellow">1</div>
+          <div class="step-content">
+            <div class="step-label">정의하기</div>
+            <div class="step-text">파트장님이 원하는 '내 역할의 범위'를 먼저 확인하세요.</div>
+            <div class="step-quote">
+              "파트장님, 제가 이 건을 70% 정도 결정하고, 최종 컨펌만 받으면 될까요?<br>
+              아니면 초기 기획부터 다 같이 리뷰할까요?"
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num num-yellow">2</div>
+          <div class="step-content">
+            <div class="step-label">범위 획정</div>
+            <div class="step-text">지시의 구체적인 범위를 재확인하세요.</div>
+            <div class="step-quote">
+              "이 프로젝트에서 제가 아카이빙 시스템을 구축하라는 것은,<br>
+              구글 드라이브 폴더 구조를 짜라는 말씀이시죠?"
+            </div>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num num-yellow">3</div>
+          <div class="step-content">
+            <div class="step-label">보고 싱크</div>
+            <div class="step-text">보고 주기와 방식을 사전에 합의하세요.</div>
+            <div class="step-quote">
+              "그럼 매주 금요일 오후에 주간 보고 형태로 이 부분만 공유드리겠습니다."
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="survival-point">
+        <span class="survival-icon">✔️</span>
+        <span class="survival-text"><strong>생존 포인트:</strong> 모든 걸 다 책임지려 하지 마세요. 상급자의 변화된 스타일에 맞춰 내가 어디까지 결정할지를 먼저 협의하세요.</span>
+      </div>
+
+      <!-- WORKBOOK 1 -->
+      <div class="workbook-section" style="margin-top:24px;">
+        <div class="workbook-title">✏️ 나만의 실천 노트 — 파트 1</div>
+        <div class="workbook-q">
+          <label><span class="q-num">Q</span> 최근 내가 모호하게 받은 지시 하나를 적고, 3단계로 어떻게 명확화할 수 있었을지 써보세요.</label>
+          <textarea class="workbook-input" id="wb1-q1" placeholder="예) '이거 알아서 진행해봐'라는 지시를 받았을 때, 1단계로 '어느 선까지 결정해도 되나요?'라고 물었다면..."></textarea>
+        </div>
+        <div class="workbook-q">
+          <label><span class="q-num">Q</span> 나는 주로 어떤 방식으로 상급자와 보고를 싱크하고 있나요? 개선할 점이 있다면?</label>
+          <textarea class="workbook-input" id="wb1-q2" placeholder="예) 지금은 필요할 때만 보고하는데, 정기적으로 금요일 오전에 간단히 정리해서 보내면 좋을 것 같다..."></textarea>
+        </div>
+        <button class="save-btn" onclick="saveWorkbook('part1')">💾 내 답변 저장하기</button>
+        <p class="save-notice">※ 저장된 내용은 이 브라우저에만 보관됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 2 -->
+  <div id="part2" class="section-card">
+    <div class="section-header">
+      <div class="section-icon icon-orange">💬</div>
+      <div class="section-title-wrap">
+        <div class="section-part">파트 2 · Warm &amp; Firm 피드백</div>
+        <h2 class="section-title">착한 사람 가면 벗기</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="intro-quote">
+        "후배한테 싫은 소리 못 하겠어요. 관계가 어색해질까 봐요..."
+      </div>
+      <p class="intro-text" style="margin-bottom:20px;">
+        <strong>'좋은 사람'</strong>이 되는 것보다 <strong>'일 잘하는 사람'</strong>이 되는 것이 선임의 생존법입니다.<br>
+        감정은 따뜻하게(Warm), 하지만 피드백은 단호하게(Firm) 전달해야 후배도 성장하고 여러분의 고통도 줄어듭니다.
+      </p>
+
+      <div class="toolkit-title">🎭 상황별 롤플레잉 — 후배가 마감을 계속 넘길 때</div>
+
+      <div class="scenario-tabs">
+        <button class="scenario-tab active-bad" id="tab-bad" onclick="switchScenario('bad')">❌ 이렇게 하면 안 돼요</button>
+        <button class="scenario-tab" id="tab-good" onclick="switchScenario('good')">✅ Warm &amp; Firm 정석</button>
+      </div>
+
+      <div class="scenario-box scenario-bad show" id="scenario-bad">
+        <div class="scenario-label label-bad">❌ Warm 하지도 Firm 하지도 않은 예시 (수동공격)</div>
+        <div class="dialogue">
+          <div class="dialogue-line"><span class="panel-thought">(한숨 쉬며)</span></div>
+          <div class="dialogue-line"><span class="dialogue-speaker">선임:</span> "아... 이거 또 늦었네. 제가 그냥 할게요."</div>
+          <div class="dialogue-line panel-thought">→ 후배는 죄책감만 느끼고 개선되지 않음. 여러분의 일만 늘어남.</div>
+        </div>
+      </div>
+
+      <div class="scenario-box scenario-good" id="scenario-good">
+        <div class="scenario-label label-good">✅ Warm &amp; Firm의 정석</div>
+        <div class="warm-firm-item warm">
+          <div class="wf-badge badge-warm">WARM — 관계 설정</div>
+          <div class="wf-text"><span class="dialogue-speaker">선임:</span> "ㅇㅇ님, 이번 프로젝트에서 이 부분이 중요해서 기대가 컸는데, 마감 시간이 지나서 좀 걱정이 됐어요."</div>
+        </div>
+        <div class="warm-firm-item firm">
+          <div class="wf-badge badge-firm">FIRM — 사실과 영향 전달</div>
+          <div class="wf-text"><span class="dialogue-speaker">선임:</span> "이번 기한을 넘기면서 제 실무 시간도 뺏기게 되었고, 전체 일정에도 차질이 생겼습니다. 마감은 신뢰의 기본이에요."</div>
+        </div>
+        <div class="warm-firm-item firm">
+          <div class="wf-badge badge-firm">FIRM — 미래 행동 요청</div>
+          <div class="wf-text"><span class="dialogue-speaker">선임:</span> "다음부터는 기한 내 제출이 어렵다면, 최소 하루 전에 저에게 알리고 이유를 설명해 주세요. 이번 건은 오늘 내로 꼭 마무리 부탁합니다."</div>
+        </div>
+      </div>
+
+      <div class="survival-point" style="background: linear-gradient(135deg, #FFF0E6, #FFE8D6); margin-top: 16px;">
+        <span class="survival-icon">✔️</span>
+        <span class="survival-text" style="color: #7A3A10;"><strong>생존 포인트:</strong> 피드백의 주어는 '당신(You-Message)'이 아니라 <strong>'사실(Fact)과 나(I-Message)'</strong>가 되어야 합니다. 인신공격이 아닌 업무 프로세스 개선을 이야기하세요.</span>
+      </div>
+
+      <!-- WORKBOOK 2 -->
+      <div class="workbook-section" style="margin-top:24px;">
+        <div class="workbook-title">✏️ 나만의 실천 노트 — 파트 2</div>
+        <div class="workbook-q">
+          <label><span class="q-num">Q</span> 최근 Firm하게 말하지 못했던 상황을 돌아보고, Warm&Firm 방식으로 다시 써보세요.</label>
+          <textarea class="workbook-input" id="wb2-q1" placeholder="예) 후배가 보고서를 대충 작성해왔을 때, '음... 조금 더 보완해보면 좋을 것 같아요'라고 했는데, 다시 쓰면..."></textarea>
+        </div>
+        <div class="workbook-q">
+          <label><span class="q-num">Q</span> 나의 '좋은 사람 콤플렉스' 점수는? (1~10점) 그리고 그 이유는?</label>
+          <textarea class="workbook-input" id="wb2-q2" placeholder="예) 나는 7점. 관계가 틀어질까봐 직접적인 말을 잘 못하는 편이다. 특히 친한 후배일수록..."></textarea>
+        </div>
+        <button class="save-btn" onclick="saveWorkbook('part2')" style="background: var(--orange);">💾 내 답변 저장하기</button>
+        <p class="save-notice">※ 저장된 내용은 이 브라우저에만 보관됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PART 3 -->
+  <div id="part3" class="section-card">
+    <div class="section-header">
+      <div class="section-icon icon-blue">🛠️</div>
+      <div class="section-title-wrap">
+        <div class="section-part">파트 3 · 시스템 워킹</div>
+        <h2 class="section-title">개인기 멈추고 시스템 돌리기</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="intro-quote">
+        "바빠 죽겠는데 보고서 파일 어디 있냐고 후배들이 계속 물어봐요. 왜 다들 각자 컴퓨터에만 저장할까요?"
+      </div>
+      <p class="intro-text" style="margin-bottom:20px;">
+        여러분이 매번 찾아주지 말고, <strong>'찾아가는 길'</strong>을 만드세요.<br>
+        그것이 선임이 해야 할 <strong>운영 효율성 개선</strong>입니다.
+      </p>
+
+      <div class="toolkit-title">📁 실습 — 우리 조만의 '업무 아카이빙 표준' 만들기</div>
+
+      <!-- 체크리스트 -->
+      <ul class="checklist" id="archiving-checklist">
+        <li class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this, 'check1')"></div>
+          <span class="check-label" id="check1">
+            <strong>[어디에?]</strong> 공통 업무 파일을 저장할 클라우드/협업 툴의 폴더 구조를 정의했다.<br>
+            <span style="color:var(--text-light); font-size:13px;">예: Google Drive &gt; [팀명] &gt; [연도] &gt; [프로젝트명]</span>
+          </span>
+        </li>
+        <li class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this, 'check2')"></div>
+          <span class="check-label" id="check2">
+            <strong>[어떻게?]</strong> 파일명 규칙을 팀원 전체가 동의한 형태로 통일했다.<br>
+            <span style="color:var(--text-light); font-size:13px;">예: YYMMDD_[프로젝트명]_V0.1_[담당자]</span>
+          </span>
+        </li>
+        <li class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this, 'check3')"></div>
+          <span class="check-label" id="check3">
+            <strong>[무엇을?]</strong> 필수 아카이빙 대상(미팅록, 결과 보고서 등)을 목록으로 정리했다.
+          </span>
+        </li>
+        <li class="checklist-item">
+          <div class="check-box" onclick="toggleCheck(this, 'check4')"></div>
+          <span class="check-label" id="check4">
+            <strong>[누가?]</strong> 시스템이 잘 지켜지는지 주차별로 점검할 담당자를 지정했다.
+          </span>
+        </li>
+      </ul>
+
+      <div class="survival-point" style="background: linear-gradient(135deg, #E3F2FF, #DAF0FF);">
+        <span class="survival-icon">✔️</span>
+        <span class="survival-text" style="color: #1A4A80;"><strong>생존 포인트:</strong> 여러분의 개인 PC는 창고가 아닙니다. 모든 업무 결과물은 <strong>팀의 공통 자산</strong>으로 만드세요. 그것이 여러분의 실무 시간을 벌어주는 첫걸음입니다.</span>
+      </div>
+
+      <!-- WORKBOOK 3 -->
+      <div class="workbook-section" style="margin-top:24px; border-color: #B3D4FF;">
+        <div class="workbook-title">✏️ 우리 팀 아카이빙 기준 작성하기</div>
+        <div class="workbook-q">
+          <label><span class="q-num" style="background: var(--blue);">Q</span> 우리 팀의 공통 파일은 어디에 저장할 것인가? (도구명 + 폴더 구조)</label>
+          <textarea class="workbook-input" id="wb3-q1" placeholder="예) Google Drive > [팀명] > 2025 > [프로젝트명] > 산출물 / 미팅록 / 참고자료"></textarea>
+        </div>
+        <div class="workbook-q">
+          <label><span class="q-num" style="background: var(--blue);">Q</span> 파일명 규칙은 어떻게 정할 것인가?</label>
+          <textarea class="workbook-input" id="wb3-q2" placeholder="예) YYMMDD_프로젝트명_V버전_담당자이니셜.확장자"></textarea>
+        </div>
+        <div class="workbook-q">
+          <label><span class="q-num" style="background: var(--blue);">Q</span> 점검 담당자와 주기는?</label>
+          <textarea class="workbook-input" id="wb3-q3" placeholder="예) 매주 월요일 오전, 담당자 로테이션으로 폴더 정리 상태 확인"></textarea>
+        </div>
+        <button class="save-btn" onclick="saveWorkbook('part3')" style="background: var(--blue);">💾 내 답변 저장하기</button>
+        <p class="save-notice">※ 저장된 내용은 이 브라우저에만 보관됩니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- COMIC -->
+  <div id="comic" class="section-card">
+    <div class="section-header">
+      <div class="section-icon icon-yellow">🎁</div>
+      <div class="section-title-wrap">
+        <div class="section-part">B급 밈 · 힐링 코너</div>
+        <h2 class="section-title">선임의 하루툰 😭→😊</h2>
+      </div>
+    </div>
+    <div class="section-body">
+      <div class="comic-strip">
+        <div class="comic-title">📖 오늘 하루, 선임의 현실</div>
+        <div class="comic-panels">
+          <div class="comic-panel">
+            <span class="panel-num">컷 1</span>
+            <span class="panel-emoji">🙋</span>
+            <p class="panel-text">
+              <span class="panel-speaker">후배:</span> "선임님, 이거 다음 단계 어떻게 해요?"<br>
+              <span class="panel-thought">(선임 속마음: '이거 엊그제 알려줬잖아...')</span><br>
+              <span class="panel-speaker">선임:</span> <span class="panel-highlight">(웃으며)</span> "아, 그건 말이죠..."
+            </p>
+          </div>
+          <div class="comic-panel">
+            <span class="panel-num">컷 2</span>
+            <span class="panel-emoji">🗂️</span>
+            <p class="panel-text">
+              <span class="panel-speaker">후배2:</span> "선임님, 이 파일 예전 양식 어디 있어요?"<br>
+              <span class="panel-thought">(선임 속마음: '그건 네가 찾아야지!!')</span><br>
+              <span class="panel-speaker">선임:</span> <span class="panel-highlight">(웃으며)</span> "아, 그건 말이죠..."
+            </p>
+          </div>
+          <div class="comic-panel">
+            <span class="panel-num">컷 3 · Before</span>
+            <span class="panel-emoji">😭</span>
+            <p class="panel-text">
+              선임의 하루가 다 가고 밤이 됐습니다...<br><br>
+              <span class="panel-thought">"내 실무는 대체 언제 하지..."</span><br>
+              <span class="panel-thought">(눈물 뚝뚝)</span>
+            </p>
+          </div>
+          <div class="comic-panel" style="background: #F0FCF5; border-color: #A8E6BF;">
+            <span class="panel-num" style="background: var(--green); color:#fff;">컷 4 · After</span>
+            <span class="panel-emoji">😎</span>
+            <p class="panel-text">
+              <strong>선임 생존법 적용 후!</strong><br><br>
+              <span class="panel-speaker">선임:</span> <span class="panel-highlight">"지난번에 공유드린 위키(Wiki)의 2번 가이드라인을 확인해 보세요."</span><br>
+              <span class="panel-speaker">후배:</span> "아, 네! 알겠습니다!"<br>
+              <span class="panel-highlight">"그럼 제 실무를 시작하겠습니다." 😌</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">
+    <img src="ifamily_logo.png" alt="iFAMILY">
+  </div>
+  <div>iFAMILY L&amp;D · 선임 생존 가이드 워크북</div>
+  <div style="margin-top:4px; font-size:12px;">내용 문의 및 피드백은 인사팀으로 공유해 주세요 💌</div>
+</footer>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✅ 저장 완료!</div>
+
+<script>
+  // ─── SCENARIO TOGGLE ───
+  function switchScenario(type) {
+    document.getElementById('scenario-bad').classList.remove('show');
+    document.getElementById('scenario-good').classList.remove('show');
+    document.getElementById('tab-bad').className = 'scenario-tab';
+    document.getElementById('tab-good').className = 'scenario-tab';
+    if (type === 'bad') {
+      document.getElementById('scenario-bad').classList.add('show');
+      document.getElementById('tab-bad').classList.add('active-bad');
+    } else {
+      document.getElementById('scenario-good').classList.add('show');
+      document.getElementById('tab-good').classList.add('active-good');
+    }
+  }
+
+  // ─── CHECKLIST ───
+  function toggleCheck(el, labelId) {
+    el.classList.toggle('checked');
+    const label = document.getElementById(labelId);
+    label.classList.toggle('checked-text');
+    updateProgress();
+    saveToStorage();
+  }
+
+  // ─── WORKBOOK SAVE ───
+  function saveWorkbook(part) {
+    const inputs = document.querySelectorAll('[id^="wb' + part.replace('part','') + '-"]');
+    inputs.forEach(input => {
+      localStorage.setItem('guide_' + input.id, input.value);
+    });
+    showToast();
+    updateProgress();
+  }
+
+  // ─── PROGRESS ───
+  const steps = ['intro', 'part1', 'part2', 'part3', 'comic'];
+  function markStep(step) {
+    const el = document.getElementById('step-' + step);
+    el.classList.toggle('done');
+    const doneCount = document.querySelectorAll('.progress-step.done').length;
+    document.getElementById('progressBar').style.width = (doneCount / steps.length * 100) + '%';
+    saveToStorage();
+  }
+  function updateProgress() {
+    const doneCount = document.querySelectorAll('.progress-step.done').length;
+    document.getElementById('progressBar').style.width = (doneCount / steps.length * 100) + '%';
+  }
+
+  // ─── TOAST ───
+  function showToast() {
+    const t = document.getElementById('toast');
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+  }
+
+  // ─── LOCAL STORAGE ───
+  function saveToStorage() {
+    const doneSteps = Array.from(document.querySelectorAll('.progress-step.done')).map(e => e.id);
+    localStorage.setItem('guide_doneSteps', JSON.stringify(doneSteps));
+    const checks = Array.from(document.querySelectorAll('.check-box.checked')).map(e => e.nextElementSibling?.id);
+    localStorage.setItem('guide_checks', JSON.stringify(checks));
+  }
+  function loadFromStorage() {
+    // workbook inputs
+    document.querySelectorAll('.workbook-input').forEach(input => {
+      const val = localStorage.getItem('guide_' + input.id);
+      if (val) input.value = val;
+    });
+    // steps
+    const doneSteps = JSON.parse(localStorage.getItem('guide_doneSteps') || '[]');
+    doneSteps.forEach(id => {
+      const el = document.getElementById(id);
+      if (el) el.classList.add('done');
+    });
+    updateProgress();
+    // checks
+    const checks = JSON.parse(localStorage.getItem('guide_checks') || '[]');
+    checks.forEach(labelId => {
+      if (!labelId) return;
+      const label = document.getElementById(labelId);
+      if (label) {
+        const checkBox = label.previousElementSibling;
+        if (checkBox) {
+          checkBox.classList.add('checked');
+          label.classList.add('checked-text');
+        }
+      }
+    });
+  }
+
+  // ─── SMOOTH SCROLL ───
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // ─── INIT ───
+  window.addEventListener('load', () => {
+    loadFromStorage();
+    setTimeout(() => {
+      document.getElementById('progressBar').style.transition = 'width 1s ease';
+    }, 100);
+  });
+</script>
+</body>
+</html>
